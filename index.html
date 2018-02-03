@@ -1,29 +1,47 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
     <title>Быстрый старт. Размещение интерактивной карты на странице</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript">
     </script>
     <script type="text/javascript">
-        ymaps.ready(init);
-        var myMap, 
-            myPlacemark;
-
+      ymaps.ready(init);
+      var myMap, 
+      myPlacemark;
         function init(){ 
             myMap = new ymaps.Map("map", {
                 center: [54.735942, 55.974187],
-                zoom: 15
+                zoom: 15,
+
+                // Кнопка для построения маршрута
+                controls: ['routeButtonControl']
             }); 
-            
-            myPlacemark = new ymaps.Placemark([54.735942, 55.974187], {}, {
-                iconLayout: 'default#image',
-                iconImageHref: 'shawarma.png',
-                iconImageSize: [30, 42],
-                iconImageOffset: [-3, -42]
-            });
-            
-            myMap.geoObjects.add(myPlacemark);
+
+        var control = myMap.controls.get('routeButtonControl');
+
+        // Зададим координаты пункта отправления с помощью геолокации.
+        control.routePanel.geolocate('from');
+
+        // Откроем панель для построения маршрутов.
+        control.state.set('expanded', true);
+          
+          myPlacemark = new ymaps.Placemark([54.735942, 55.974187], {}, {
+              iconLayout: 'default#image',
+              iconImageHref: 'shawarma.png',
+              iconImageSize: [30, 42],
+              iconImageOffset: [-3, -42]
+          });
+          
+          myPlacemark_two = new ymaps.Placemark([54.735213, 55.958933], {}, {
+            iconLayout: 'default#image',
+            iconImageHref: 'shawarma.png',
+            iconImageSize: [30, 42],
+            iconImageOffset: [-3, -42]
+          });
+
+          myMap.geoObjects.add(myPlacemark);
+          myMap.geoObjects.add(myPlacemark_two);     
         }
     </script>
 </head>
@@ -32,4 +50,6 @@
     <div id="map" style="width: 600px; height: 400px"></div>
 </body>
 
+    <script src="position.js"></script>
+    <script src="mark.js"></script>
 </html>
