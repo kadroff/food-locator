@@ -2,9 +2,14 @@
 <html>
 <head>
     <title>Быстрый старт. Размещение интерактивной карты на странице</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript">
-    </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     <script type="text/javascript">
       ymaps.ready(init);
       var myMap, 
@@ -14,25 +19,15 @@
                 center: [54.735942, 55.974187],
                 zoom: 15,
 
-                // Кнопка для построения маршрута
-                controls: ['routeButtonControl']
             }); 
 
-        var control = myMap.controls.get('routeButtonControl');
-
-        // Зададим координаты пункта отправления с помощью геолокации.
-        control.routePanel.geolocate('from');
-
-        // Откроем панель для построения маршрутов.
-        control.state.set('expanded', true);
-          
           myPlacemark = new ymaps.Placemark([54.735942, 55.974187], {}, {
               iconLayout: 'default#image',
               iconImageHref: 'shawarma.png',
               iconImageSize: [30, 42],
               iconImageOffset: [-3, -42]
           });
-          
+
           myPlacemark_two = new ymaps.Placemark([54.735213, 55.958933], {}, {
             iconLayout: 'default#image',
             iconImageHref: 'shawarma.png',
@@ -42,14 +37,30 @@
 
           myMap.geoObjects.add(myPlacemark);
           myMap.geoObjects.add(myPlacemark_two);     
+          myMap.controls.remove("zoomControl");
+          myMap.controls.remove("searchControl");
+          myMap.controls.remove("trafficControl");
+          myMap.controls.remove("rulerControl");
+          myMap.controls.remove("typeSelector");
+          myMap.controls.remove("fullscreenControl");
+          myMap.controls.remove("geolocationControl");
         }
+
+       
     </script>
 </head>
-
 <body>
-    <div id="map" style="width: 600px; height: 400px"></div>
-</body>
+  <div id="map"></div>
+  <script>
+    (function() {
+      const map = document.querySelector("#map");
+      const width = window.innerWidth + 'px';
+      const height = window.innerHeight + 'px';
 
-    <script src="position.js"></script>
-    <script src="mark.js"></script>
+      map.style.width = width;
+      map.style.height = height;
+    })();
+  </script>  
+</body>
 </html>
+ 
