@@ -35,44 +35,43 @@
           width: 100%
         }
     </style>
+    <script src="shawarmas.js"></script>
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     <script type="text/javascript">
       ymaps.ready(init);
       var myMap, 
       myPlacemark;
-        function init(){ 
-            myMap = new ymaps.Map("map", {
-                center: [54.735942, 55.974187],
-                zoom: 15,
 
-            }); 
+      function init(){ 
+        myMap = new ymaps.Map("map", {
+            center: [54.735942, 55.974187],
+            zoom: 15,
 
-          myPlacemark = new ymaps.Placemark([54.735942, 55.974187], {}, {
+        });
+
+        drawShawarmas(SHAWARMAS);
+            
+        myMap.controls.remove("zoomControl");
+        myMap.controls.remove("searchControl");
+        myMap.controls.remove("trafficControl");
+        myMap.controls.remove("rulerControl");
+        myMap.controls.remove("typeSelector");
+        myMap.controls.remove("fullscreenControl");
+        myMap.controls.remove("geolocationControl");
+      }
+
+      function drawShawarmas(shawarmas) {
+        shawarmas.forEach(shawarma => {
+          const placemark = new ymaps.Placemark([shawarma.long, shawarma.lat], {}, {
               iconLayout: 'default#image',
               iconImageHref: 'shawarma.png',
               iconImageSize: [30, 42],
               iconImageOffset: [-3, -42]
           });
 
-          myPlacemark_two = new ymaps.Placemark([54.735213, 55.958933], {}, {
-            iconLayout: 'default#image',
-            iconImageHref: 'shawarma.png',
-            iconImageSize: [30, 42],
-            iconImageOffset: [-3, -42]
-          });
-
-          myMap.geoObjects.add(myPlacemark);
-          myMap.geoObjects.add(myPlacemark_two);     
-          myMap.controls.remove("zoomControl");
-          myMap.controls.remove("searchControl");
-          myMap.controls.remove("trafficControl");
-          myMap.controls.remove("rulerControl");
-          myMap.controls.remove("typeSelector");
-          myMap.controls.remove("fullscreenControl");
-          myMap.controls.remove("geolocationControl");
-        }
-
-       
+          myMap.geoObjects.add(placemark);
+        });
+      }
     </script>
 </head>
 <body>
